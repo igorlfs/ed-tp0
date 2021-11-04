@@ -145,7 +145,7 @@ void matrix::setElemento(const int &x, const int &y, const double &v) {
     erroAssert((y > 0) || (y <= this->tamy), "Índice inválido");
 
     this->m[x][y] = v;
-    /* this->ml->escreveMemLog((long int)&(this->m[x][y]), sizeof(double)); */
+    this->ml->escreveMemLog((long int)&(this->m[x][y]), sizeof(double));
 }
 
 // Descrição: sobreescreve o operador '+' como a soma de matrizes
