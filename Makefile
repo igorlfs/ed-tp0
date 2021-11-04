@@ -1,22 +1,10 @@
 #---------------------------------------------------------------------
-# Arquivo	: Makefile
-# Conteúdo	: compilar o programa matop
-# Autor		: Wagner Meira Jr. (meira@dcc.ufmg.br)
-# Histórico	: 2021-10-18 - arquivo criado
-#		: 2021-10-21 - estrutura de diretórios
-#---------------------------------------------------------------------
-# Opções	: make all - compila tudo
-#		: make clean - remove objetos e executável
+# Opções	: make all - compila programa principal
+#			: make clean - remove objetos e executável
+#			: make test - compila arquivo de teste
 #---------------------------------------------------------------------
 
-########## ALTERAÇÃO ############
-#CC = gcc -> Não estou usando C
-#Demais alterações aplicáveis foram feitas
 CC = g++
-########## ALTERAÇÃO ############
-CFLAGS = -Wall -c 
-## Essa CFLAGS está repetida em baixo
-## TODO: fix
 LIBS = -lm
 SRC = src
 OBJ = obj
@@ -31,7 +19,7 @@ EXE = $(BIN)/matop
 all: $(EXE)
 
 $(BIN)/matop: $(OBJS)
-	$(CC) -o $(BIN)/matop $(OBJS) $(LIBS)
+	$(CC) -o $(EXE) $(OBJS) $(LIBS)
 
 $(OBJ)/matop.o: $(HDRS) $(SRC)/matop.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/matop.o $(SRC)/matop.cpp
@@ -41,6 +29,15 @@ $(OBJ)/mat.o: $(HDRS) $(SRC)/mat.cpp
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.cpp
+
+test: $(BIN)/test
+
+$(BIN)/test: $(OBJ)/tst.o $(OBJ)/mat.o
+	$(CC) -o $(BIN)/test  $(OBJ)/tst.o $(OBJ)/mat.o $(OBJ)/memlog.o $(LIBS) -lgtest
+
+$(OBJ)/tst.o: $(INC)/mat.h $(SRC)/tst.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/tst.o $(SRC)/tst.cpp
+
 	
 clean:
-	rm $(EXE) $(OBJS) 
+	rm -r $(BIN)/* $(OBJ)/*
