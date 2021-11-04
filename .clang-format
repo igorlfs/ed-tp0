@@ -1,0 +1,6 @@
+AllowShortIfStatementsOnASingleLine: true
+ReflowComments: false
+IndentCaseLabels: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+IndentWidth: 4

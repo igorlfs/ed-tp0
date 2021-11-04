@@ -1,0 +1,6 @@
+obj/*
+bin/*
+.cache/
+compile_commands.json
+*.txt
+TODO
