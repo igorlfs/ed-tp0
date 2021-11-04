@@ -31,6 +31,7 @@ matrix::matrix(const int &tx, const int &ty, memlog &ml) {
 // Entrada: --
 // Saída: matriz nula
 void matrix::inicializaMatrizNula() {
+
     // inicializa todos os elementos da matriz com 0, por segurança
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
@@ -74,8 +75,7 @@ void matrix::imprimeMatriz(const std::string &fileName) {
 // Saída: matriz transposta
 matrix matrix::transpoeMatriz() {
 
-    // inicializa a matriz resultante, garantindo a compatibilidade das
-    // dimensões
+    // inicializa a matriz resultante, garantindo a compatibilidade das dimensões
     matrix result(this->tamy, this->tamx, *this->ml);
     result.inicializaMatrizNula();
 
@@ -96,6 +96,7 @@ matrix matrix::transpoeMatriz() {
 // Entrada: --
 // Saída: matriz destruída
 matrix::~matrix() {
+
     // apenas um aviso se a matriz for destruída mais de uma vez
     avisoAssert(((this->tamx > 0) && (this->tamy > 0)),
                 "Matriz já foi destruída");
@@ -150,12 +151,12 @@ void matrix::setElemento(const int &x, const int &y, const double &v) {
 // Entrada: matriz M
 // Saida: matriz resultante
 matrix matrix::operator+(const matrix &M) {
+
     // verifica se as dimensões das matrizes a e b são as mesmas
     erroAssert(this->tamx == M.tamx, "Dimensões incompatíveis");
     erroAssert(this->tamy == M.tamy, "Dimensões incompatíveis");
 
-    // inicializa a matriz resultante, garantindo a compatibilidade das
-    // dimensões
+    // inicializa a matriz resultante, garantindo a compatibilidade das dimensões
     matrix result(this->tamx, this->tamy, *this->ml);
     result.inicializaMatrizNula();
 
@@ -180,8 +181,7 @@ matrix matrix::operator*(const matrix &M) {
     // verifica se as dimensões das matrizes a e b são as mesmas
     erroAssert(this->tamy == M.tamx, "Dimensões incompatíveis");
 
-    // inicializa a matriz resultante, garantindo a compatibilidade das
-    // dimensões
+    // inicializa a matriz resultante, garantindo a compatibilidade das dimensões
     matrix result(this->tamx, M.tamy, *this->ml);
     result.inicializaMatrizNula();
 
