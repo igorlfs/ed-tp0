@@ -15,8 +15,8 @@ class matrix {
     ~matrix();
 
     // Getters:
-    double getElemento(const int &x, const int &y);
-    double *getAddress(const int &x, const int &y);
+    double getElemento(const int &x, const int &y) const;
+    double *getAddress(const int &x, const int &y) const;
 
     void setElemento(const int &x, const int &y, const double &v);
 

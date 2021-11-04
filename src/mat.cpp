@@ -114,7 +114,7 @@ matrix::~matrix() {
 // Descrição: retorna o elemento na posição (x,y)
 // Entrada: x,y
 // Saída: o elemento na posição (x,y)
-double matrix::getElemento(const int &x, const int &y) {
+double matrix::getElemento(const int &x, const int &y) const {
 
     // verifica se x e y são válidos
     erroAssert((x > 0) || (x <= this->tamx), "Índice inválido");
@@ -126,7 +126,8 @@ double matrix::getElemento(const int &x, const int &y) {
 // Descrição: retorna o endereço do elemento na posição (x,y)
 // Entrada: x,y
 // Saída: o endereço do elemento na posição (x,y)
-double *matrix::getAddress(const int &x, const int &y) {
+double *matrix::getAddress(const int &x, const int &y) const {
+
     // verifica se x e y são válidos
     erroAssert((x > 0) || (x <= this->tamx), "Índice inválido");
     erroAssert((y > 0) || (y <= this->tamy), "Índice inválido");
