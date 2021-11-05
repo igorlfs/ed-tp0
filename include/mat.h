@@ -3,8 +3,7 @@
 
 #include "memlog.h"
 
-// TODO: remover?
-#define MAXTAM 10
+#define MAXTAM 1000
 
 class matrix {
   public:
@@ -30,5 +29,4 @@ class matrix {
     memlog *ml;
 };
 
-/* void copiaMatriz(matrix *src, matrix *dst); */
 #endif
