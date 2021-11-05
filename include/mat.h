@@ -7,7 +7,7 @@
 
 class matrix {
   public:
-    matrix(const int &tx, const int &ty, memlog &ml);
+    matrix(const int &tx, const int &ty);
     void inicializaMatrizNula();
     void imprimeMatriz(const std::string &file) const;
     matrix transpoeMatriz() const;
@@ -22,7 +22,6 @@ class matrix {
   private:
     double **m;
     int tamx, tamy;
-    memlog *ml;
 };
 
 #endif

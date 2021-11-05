@@ -5,7 +5,7 @@
 // Descrição: constrói matriz com dimensões tx por ty
 // Entrada: tx, ty, memlog
 // Saída: matriz
-matrix::matrix(const int &tx, const int &ty, memlog &meml) {
+matrix::matrix(const int &tx, const int &ty) {
 
     // verifica se os valores de tx e ty são válidos
     erroAssert(tx > 0, "Dimensão nula");
@@ -16,7 +16,6 @@ matrix::matrix(const int &tx, const int &ty, memlog &meml) {
     // atribui variáveis
     this->tamx = tx;
     this->tamy = ty;
-    this->ml = &meml;
 
     // aloca dinamicamente a matriz
     this->m = new double *[this->tamx];
@@ -72,7 +71,7 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
 matrix matrix::transpoeMatriz() const {
 
     // inicializa a matriz resultante, garantindo a compatibilidade das dimensões
-    matrix result(this->tamy, this->tamx, *this->ml);
+    matrix result(this->tamy, this->tamx);
     result.inicializaMatrizNula();
 
     // copia a matriz original transpondo
@@ -145,7 +144,7 @@ matrix matrix::operator+(const matrix &M) {
     erroAssert(this->tamy == M.tamy, "Dimensões incompatíveis");
 
     // inicializa a matriz resultante, garantindo a compatibilidade das dimensões
-    matrix result(this->tamx, this->tamy, *this->ml);
+    matrix result(this->tamx, this->tamy);
     result.inicializaMatrizNula();
 
     // faz a soma elemento a elemento
@@ -169,7 +168,7 @@ matrix matrix::operator*(const matrix &M) {
     erroAssert(this->tamy == M.tamx, "Dimensões incompatíveis");
 
     // inicializa a matriz resultante, garantindo a compatibilidade das dimensões
-    matrix result(this->tamx, M.tamy, *this->ml);
+    matrix result(this->tamx, M.tamy);
     result.inicializaMatrizNula();
 
     // realiza a multiplicação de matrizes

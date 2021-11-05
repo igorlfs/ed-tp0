@@ -219,7 +219,7 @@ matrix matrixBuilder(std::string &matrixName) {
     inFile >> x >> y;
 
     // Construa a matriz
-    matrix mat(x, y, ml);
+    matrix mat(x, y);
     mat.inicializaMatrizNula();
 
     // Inicialize a matriz

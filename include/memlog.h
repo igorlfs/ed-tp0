@@ -36,9 +36,13 @@ class memlog {
     int geralMemLog(const char &c, const long int &pos, const long int &tam);
 };
 
+// MACROS para aumentar a perfomance
 #define LEMEMLOG(pos, tam)                                                     \
-    ((void)((ml->ativo == MLATIVO) ? ml->leMemLog(pos, tam) : 0))
+    ((void)((ml.ativo == MLATIVO) ? ml.leMemLog(pos, tam) : 0))
 #define ESCREVEMEMLOG(pos, tam)                                                \
-    ((void)((ml->ativo == MLATIVO) ? ml->escreveMemLog(pos, tam) : 0))
+    ((void)((ml.ativo == MLATIVO) ? ml.escreveMemLog(pos, tam) : 0))
+
+// Variável global de memlog
+extern memlog ml;
 
 #endif
