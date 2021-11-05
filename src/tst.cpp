@@ -87,20 +87,22 @@ TEST(matrix, multiplicaMatrizes) {
 
 TEST(matrix, transpoeMatriz) {
 
+    const double arr[SIZE][SIZE * SIZE] = {{1, 2, 3, 4}, {5, 6, 7, 8}};
+
     // Initicialize matriz e a transpõe
     matrix x(SIZE, SIZE * SIZE, ml);
     x.inicializaMatrizNula();
-    for (int i = 0; i < SIZE; ++i)
-        for (int j = 0; j < SIZE * SIZE; ++j)
-            x.setElemento(i, j, SIZE * i);
-    const matrix xTransp = x.transpoeMatriz();
+    for (int i = 0, k = 0; i < SIZE; ++i)
+        for (int j = 0; j < SIZE * SIZE; ++j, ++k)
+            x.setElemento(i, j, arr[i][j]);
+    matrix xTransp = x.transpoeMatriz();
 
     // Define matriz esperada
     matrix expect(SIZE * SIZE, SIZE, ml);
     expect.inicializaMatrizNula();
-    for (int i = 0; i < SIZE * SIZE; ++i)
-        for (int j = 0; j < SIZE; ++j)
-            expect.setElemento(j, i, SIZE * i);
+    for (int i = 0, k = 0; i < SIZE * SIZE; ++i)
+        for (int j = 0; j < SIZE; ++j, ++k)
+            expect.setElemento(i, j, arr[j][i]);
 
     // Assert
     for (int i = 0; i < SIZE * SIZE; ++i)
