@@ -252,31 +252,49 @@ int main(int argc, char **argv) {
     regmem ? ml.ativaMemLog() : ml.desativaMemLog();
 
     // interprete arquivo contendo matriz 1
+    ml.defineFaseMemLog(0);
     matrix a = matrixBuilder(m1Nome);
 
     // execução dependente da operação escolhida
     switch (opescolhida) {
         case SOMAR: {
             // interprete arquivo contendo matriz 2
+            ml.defineFaseMemLog(1);
             matrix b = matrixBuilder(m2Nome);
             // cria e imprime uma matriz que é a soma das que foram lidas
             // as matrizes são destrúidas automaticamente pelo destrutor
+            ml.defineFaseMemLog(2);
+            a.acessaMatriz();
+            b.acessaMatriz();
             matrix c = a + b;
+            ml.defineFaseMemLog(3);
+            c.acessaMatriz();
+            // acessa matriz c
             if (regmem) c.imprimeMatriz(outNome);
             break;
         }
         case MULTIPLICAR: {
             // interprete arquivo contendo matriz 2
+            ml.defineFaseMemLog(1);
             matrix b = matrixBuilder(m2Nome);
             // cria e imprime uma matriz que é o produto das que foram lidas
             // as matrizes são destrúidas automaticamente pelo destrutor
+            ml.defineFaseMemLog(2);
+            a.acessaMatriz();
+            b.acessaMatriz();
             matrix c = a * b;
+            ml.defineFaseMemLog(3);
+            c.acessaMatriz();
             if (regmem) c.imprimeMatriz(outNome);
             break;
         }
         case TRANSPOR: {
             // cria e imprime uma matriz sendo a transposta da matriz lida
+            ml.defineFaseMemLog(1);
+            a.acessaMatriz();
             matrix c = a.transpoeMatriz();
+            ml.defineFaseMemLog(2);
+            c.acessaMatriz();
             if (regmem) c.imprimeMatriz(outNome);
             break;
         }
