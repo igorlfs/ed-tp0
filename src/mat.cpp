@@ -45,7 +45,7 @@ void matrix::inicializaMatrizNula() {
 // Descrição: imprime a matriz em um arquivo
 // Entrada: nome do arquivo
 // Saída: impressão no arquivo
-void matrix::imprimeMatriz(const std::string &fileName) {
+void matrix::imprimeMatriz(const std::string &fileName) const {
 
     // segurança, mas erro não deve acontecer jamais
     erroAssert(this->tamx <= MAXTAM, "Dimensão maior que permitido");
@@ -70,10 +70,10 @@ void matrix::imprimeMatriz(const std::string &fileName) {
     outfile.close();
 }
 
-// Descrição: retorna a matriz transposta da chamada
+// Descrição: retorna uma cópia transposta da matriz
 // Entrada: --
 // Saída: matriz transposta
-matrix matrix::transpoeMatriz() {
+matrix matrix::transpoeMatriz() const {
 
     // inicializa a matriz resultante, garantindo a compatibilidade das dimensões
     matrix result(this->tamy, this->tamx, *this->ml);
