@@ -5,7 +5,7 @@
 // Descrição: constrói matriz com dimensões tx por ty
 // Entrada: tx, ty, memlog
 // Saída: matriz
-matrix::matrix(const int &tx, const int &ty, memlog &ml) {
+matrix::matrix(const int &tx, const int &ty, memlog &meml) {
 
     // verifica se os valores de tx e ty são válidos
     erroAssert(tx > 0, "Dimensão nula");
@@ -16,14 +16,14 @@ matrix::matrix(const int &tx, const int &ty, memlog &ml) {
     // atribui variáveis
     this->tamx = tx;
     this->tamy = ty;
-    this->ml = &ml;
+    this->ml = &meml;
 
     // aloca dinamicamente a matriz
     this->m = new double *[this->tamx];
-    this->ml->escreveMemLog((long int)(&(this->m)), sizeof(double));
+    ESCREVEMEMLOG((long int)(&(this->m)), sizeof(double));
     for (int i = 0; i < this->tamx; ++i) {
         this->m[i] = new double[this->tamy];
-        this->ml->escreveMemLog((long int)(&(this->m[i])), sizeof(double));
+        ESCREVEMEMLOG((long int)(&(this->m[i])), sizeof(double));
     }
 }
 
@@ -36,8 +36,7 @@ void matrix::inicializaMatrizNula() {
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             this->m[i][j] = 0;
-            this->ml->escreveMemLog((long int)(&(this->m[i][j])),
-                                    sizeof(double));
+            ESCREVEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
         }
     }
 }
@@ -61,7 +60,7 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
         for (int j = 0; j < this->tamy; j++) {
             outfile << this->m[i][j];
             if (j != this->tamy - 1) outfile << ' ';
-            this->ml->leMemLog((long int)(&(this->m[i][j])), sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
         }
         outfile.put('\n');
     }
@@ -80,12 +79,11 @@ matrix matrix::transpoeMatriz() const {
     result.inicializaMatrizNula();
 
     // copia a matriz original transpondo
+    // a função setElemento já escreve no Memlog
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             result.setElemento(j, i, this->m[i][j]);
-            this->ml->leMemLog((long int)(&(this->m[i][j])), sizeof(double));
-            this->ml->escreveMemLog((long int)(&(result.m[j][i])),
-                                    sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
         }
     }
 
@@ -103,7 +101,7 @@ double matrix::acessaMatriz() const {
         for (int j = 0; j < this->tamy; ++j) {
             aux = this->m[i][j];
             s += aux;
-            this->ml->leMemLog((long int)(&(this->m[i][j])), sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
         }
     }
     return s;
@@ -162,7 +160,7 @@ void matrix::setElemento(const int &x, const int &y, const double &v) {
     erroAssert((y > 0) || (y <= this->tamy), "Índice inválido");
 
     this->m[x][y] = v;
-    this->ml->escreveMemLog((long int)&(this->m[x][y]), sizeof(double));
+    ESCREVEMEMLOG((long int)&(this->m[x][y]), sizeof(double));
 }
 
 // Descrição: sobreescreve o operador '+' como a soma de matrizes
@@ -182,10 +180,9 @@ matrix matrix::operator+(const matrix &M) {
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             result.m[i][j] = this->m[i][j] + M.m[i][j];
-            this->ml->leMemLog((long int)(&(this->m[i][j])), sizeof(double));
-            this->ml->leMemLog((long int)(&(M.m[i][j])), sizeof(double));
-            this->ml->escreveMemLog((long int)(&(result.m[i][j])),
-                                    sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
+            LEMEMLOG((long int)(&(M.m[i][j])), sizeof(double));
+            ESCREVEMEMLOG((long int)(&(result.m[i][j])), sizeof(double));
         }
     }
 
@@ -208,11 +205,9 @@ matrix matrix::operator*(const matrix &M) {
         for (int j = 0; j < result.tamy; j++) {
             for (int k = 0; k < this->tamy; k++) {
                 result.m[i][j] += this->m[i][k] * M.m[k][j];
-                this->ml->leMemLog((long int)(&(this->m[i][k])),
-                                   sizeof(double));
-                this->ml->leMemLog((long int)(&(M.m[k][j])), sizeof(double));
-                this->ml->escreveMemLog((long int)(&(result.m[i][j])),
-                                        sizeof(double));
+                LEMEMLOG((long int)(&(this->m[i][k])), sizeof(double));
+                LEMEMLOG((long int)(&(M.m[k][j])), sizeof(double));
+                ESCREVEMEMLOG((long int)(&(result.m[i][j])), sizeof(double));
             }
         }
     }

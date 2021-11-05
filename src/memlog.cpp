@@ -1,10 +1,6 @@
 #include "memlog.h"
 #include "msgassert.h"
 
-// Constantes para estados de registro
-static constexpr bool MLATIVO = 1;
-static constexpr bool MLINATIVO = 0;
-
 // Descrição: calcula a diferença entre t2 e t1, que é armazenada em resultado
 // Entrada: t1, t2
 // Saída: resultado
