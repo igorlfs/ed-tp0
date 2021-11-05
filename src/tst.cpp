@@ -48,36 +48,29 @@ TEST(matrix, somaMatrizes) {
 TEST(matrix, multiplicaMatrizes) {
 
     // Initicialize matrizes e multiplica
-    int xElements[SIZE * SIZE] = {1, 2, 3, 4};
+    double xElements[SIZE * SIZE] = {1, 2, 3, 4};
     matrix x(SIZE, SIZE, ml);
     x.inicializaMatrizNula();
-    int k = 0;
-    for (int i = 0; i < SIZE; ++i)
-        for (int j = 0; j < SIZE; ++j) {
+    for (int i = 0, k = 0; i < SIZE; ++i)
+        for (int j = 0; j < SIZE; ++j, ++k)
             x.setElemento(i, j, xElements[k]);
-            k++;
-        }
+
     int yElements[SIZE * SIZE] = {5, 6, 7, 8};
     matrix y(SIZE, SIZE, ml);
     y.inicializaMatrizNula();
-    k = 0;
-    for (int i = 0; i < SIZE; ++i)
-        for (int j = 0; j < SIZE; ++j) {
+    for (int i = 0, k = 0; i < SIZE; ++i)
+        for (int j = 0; j < SIZE; ++j, ++k)
             y.setElemento(i, j, yElements[k]);
-            k++;
-        }
+
     const matrix w = x * y;
 
     // Define matriz esperada
     int zElements[SIZE * SIZE] = {19, 22, 43, 50};
     matrix z(SIZE, SIZE, ml);
     z.inicializaMatrizNula();
-    k = 0;
-    for (int i = 0; i < SIZE; ++i)
-        for (int j = 0; j < SIZE; ++j) {
+    for (int i = 0, k = 0; i < SIZE; ++i)
+        for (int j = 0; j < SIZE; ++j, ++k)
             z.setElemento(i, j, zElements[k]);
-            k++;
-        }
 
     // Assert
     for (int i = 0; i < SIZE; ++i)
