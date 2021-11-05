@@ -92,6 +92,23 @@ matrix matrix::transpoeMatriz() {
     return result;
 }
 
+// Descrição: acessa os elementos da matriz para fins de análise
+// Entrada: --
+// Saída: soma dos elementos da matriz
+double matrix::acessaMatriz() const {
+
+    double aux, s = 0.0;
+
+    for (int i = 0; i < this->tamx; ++i) {
+        for (int j = 0; j < this->tamy; ++j) {
+            aux = this->m[i][j];
+            s += aux;
+            this->ml->leMemLog((long int)(&(this->m[i][j])), sizeof(double));
+        }
+    }
+    return s;
+}
+
 // Descrição: destrói a matriz, tornando-a inacessível
 // Entrada: --
 // Saída: matriz destruída

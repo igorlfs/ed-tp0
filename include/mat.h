@@ -12,6 +12,7 @@ class matrix {
     void inicializaMatrizNula();
     void imprimeMatriz(const std::string &file);
     matrix transpoeMatriz();
+    double acessaMatriz() const;
     ~matrix();
 
     // Getters:
