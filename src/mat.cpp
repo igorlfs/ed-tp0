@@ -20,11 +20,8 @@ matrix::matrix(const int &tx, const int &ty, memlog &meml) {
 
     // aloca dinamicamente a matriz
     this->m = new double *[this->tamx];
-    ESCREVEMEMLOG((long int)(&(this->m)), sizeof(double));
-    for (int i = 0; i < this->tamx; ++i) {
+    for (int i = 0; i < this->tamx; ++i)
         this->m[i] = new double[this->tamy];
-        ESCREVEMEMLOG((long int)(&(this->m[i])), sizeof(double));
-    }
 }
 
 // Descrição: inicializa mat com valores nulos
@@ -117,9 +114,8 @@ matrix::~matrix() {
                 "Matriz já foi destruída");
 
     // delete as alocações
-    for (int i = 0; i < this->tamx; ++i) {
+    for (int i = 0; i < this->tamx; ++i)
         delete[] this->m[i];
-    }
     delete[] this->m;
 
     // torna as dimensões inválidas
