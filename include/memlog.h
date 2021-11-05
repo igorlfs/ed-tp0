@@ -8,7 +8,7 @@ class memlog {
     int iniciaMemLog(const std::string &nome);
     int ativaMemLog();
     int desativaMemLog();
-    /* int defineFaseMemLog(const int &f); */
+    int defineFaseMemLog(const int &f);
     int leMemLog(const long int &pos, const long int &tam);
     int escreveMemLog(const long int &pos, const long int &tam);
     int finalizaMemLog();

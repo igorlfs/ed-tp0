@@ -68,6 +68,14 @@ int memlog::desativaMemLog() {
     return MLINATIVO;
 }
 
+// Descrição: define a fase de registro de acessos
+// Entrada: f
+// Saída: valor de f
+int memlog::defineFaseMemLog(const int &f) {
+    this->fase = f;
+    return f;
+}
+
 // Descrição: registra acesso de leitura de tam bytes na posição pos
 // Entrada: pos,tam
 // Saída: resultado da obtencao do relogio
