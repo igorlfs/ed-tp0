@@ -14,10 +14,6 @@ class matrix {
     double acessaMatriz() const;
     ~matrix();
 
-    // Getters:
-    double getElemento(const int &x, const int &y) const;
-    double *getAddress(const int &x, const int &y) const;
-
     void setElemento(const int &x, const int &y, const double &v);
 
     matrix operator+(const matrix &mat);
