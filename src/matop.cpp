@@ -155,14 +155,16 @@ void isFileValid(std::string &str) {
     ss >> x >> y;
 
     // Teste a validade das outras linhas
-    while (1) {
+    for (int lineCounter = 1;; lineCounter++) {
         // Antes de testar cada linha verifique se o EOF foi atingido
         std::string line;
         std::getline(inFile, line);
         if (inFile.eof()) break;
+        lineCounter++;
         erroAssert(
             isOtherLineValid(line),
-            "Alguma linha do arquivo da matriz apresenta inconsistência");
+            lineCounter
+                << ": linha do arquivo da matriz apresenta inconsistência");
     }
 
     // Teste a quantidade de elementos
@@ -179,14 +181,14 @@ void isFileValid(std::string &str) {
     // Ignore a primeira linha
     std::getline(inFile, firstLine);
 
-    while (1) {
+    for (int lineCounter = 1;; lineCounter++) {
         // Antes de testar cada linha verifique se o EOF foi atingido
         std::string line;
         std::getline(inFile, line);
         if (inFile.eof()) break;
-        erroAssert(
-            countCharStr(line, ' ') == y - 1,
-            "Linha do arquivo da matriz não tem o número certo de colunas");
+        erroAssert(countCharStr(line, ' ') == y - 1,
+                   lineCounter << ": linha do arquivo da matriz não tem o "
+                                  " número certo de colunas");
     }
 
     // Similarmente, nós contamos o número de quebras de linhas ('\n') no
