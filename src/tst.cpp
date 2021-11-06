@@ -8,7 +8,7 @@ memlog ml;
 TEST(matrix, iniciaMatrizNula) {
 
     // Initicialize matriz
-    matrix x(SIZE, SIZE, ml);
+    matrix x(SIZE, SIZE);
     x.inicializaMatrizNula();
 
     // Assert
@@ -20,12 +20,12 @@ TEST(matrix, iniciaMatrizNula) {
 TEST(matrix, somaMatrizes) {
 
     // Initicialize matrizes e soma
-    matrix x(SIZE, SIZE, ml);
+    matrix x(SIZE, SIZE);
     x.inicializaMatrizNula();
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
             x.setElemento(i, j, i * (j + 1));
-    matrix y(SIZE, SIZE, ml);
+    matrix y(SIZE, SIZE);
     y.inicializaMatrizNula();
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
@@ -33,7 +33,7 @@ TEST(matrix, somaMatrizes) {
     const matrix w = x + y;
 
     // Define matriz esperada
-    matrix z(SIZE, SIZE, ml);
+    matrix z(SIZE, SIZE);
     z.inicializaMatrizNula();
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
@@ -49,14 +49,14 @@ TEST(matrix, multiplicaMatrizes) {
 
     // Initicialize matrizes e multiplica
     double xElements[SIZE * SIZE] = {1, 2, 3, 4};
-    matrix x(SIZE, SIZE, ml);
+    matrix x(SIZE, SIZE);
     x.inicializaMatrizNula();
     for (int i = 0, k = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j, ++k)
             x.setElemento(i, j, xElements[k]);
 
     int yElements[SIZE * SIZE] = {5, 6, 7, 8};
-    matrix y(SIZE, SIZE, ml);
+    matrix y(SIZE, SIZE);
     y.inicializaMatrizNula();
     for (int i = 0, k = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j, ++k)
@@ -66,7 +66,7 @@ TEST(matrix, multiplicaMatrizes) {
 
     // Define matriz esperada
     int zElements[SIZE * SIZE] = {19, 22, 43, 50};
-    matrix z(SIZE, SIZE, ml);
+    matrix z(SIZE, SIZE);
     z.inicializaMatrizNula();
     for (int i = 0, k = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j, ++k)
@@ -83,7 +83,7 @@ TEST(matrix, transpoeMatriz) {
     const double arr[SIZE][SIZE * SIZE] = {{1, 2, 3, 4}, {5, 6, 7, 8}};
 
     // Initicialize matriz e a transpõe
-    matrix x(SIZE, SIZE * SIZE, ml);
+    matrix x(SIZE, SIZE * SIZE);
     x.inicializaMatrizNula();
     for (int i = 0, k = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE * SIZE; ++j, ++k)
@@ -91,7 +91,7 @@ TEST(matrix, transpoeMatriz) {
     matrix xTransp = x.transpoeMatriz();
 
     // Define matriz esperada
-    matrix expect(SIZE * SIZE, SIZE, ml);
+    matrix expect(SIZE * SIZE, SIZE);
     expect.inicializaMatrizNula();
     for (int i = 0, k = 0; i < SIZE * SIZE; ++i)
         for (int j = 0; j < SIZE; ++j, ++k)
