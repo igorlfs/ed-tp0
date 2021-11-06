@@ -18,9 +18,14 @@ matrix::matrix(const int &tx, const int &ty) {
     this->tamy = ty;
 
     // aloca dinamicamente a matriz
-    this->m = new double *[this->tamx];
-    for (int i = 0; i < this->tamx; ++i)
-        this->m[i] = new double[this->tamy];
+    // use nothrow para checar se a alocação ocorreu normalmente
+    // assim, se houve algum erro, o ponteiro aponta para nullptr
+    this->m = new (std::nothrow) double *[this->tamx];
+    erroAssert(this->m, "Falha ao alocar dinamicamente a matriz");
+    for (int i = 0; i < this->tamx; ++i) {
+        this->m[i] = new (std::nothrow) double[this->tamy];
+        erroAssert(this->m[i], "Falha ao alocar dinamicamente a matriz");
+    }
 }
 
 // Descrição: inicializa mat com valores nulos
