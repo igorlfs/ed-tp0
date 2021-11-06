@@ -80,11 +80,11 @@ matrix matrix::transpoeMatriz() const {
     result.inicializaMatrizNula();
 
     // copia a matriz original transpondo
-    // a função setElemento já escreve no Memlog
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
-            result.setElemento(j, i, this->m[i][j]);
+            result.m[j][i] = this->m[i][j];
             LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
+            ESCREVEMEMLOG((long int)&(result.m[j][i]), sizeof(double));
         }
     }
 
@@ -136,7 +136,6 @@ void matrix::setElemento(const int &x, const int &y, const double &v) {
     erroAssert((y > 0) || (y <= this->tamy), "Índice inválido");
 
     this->m[x][y] = v;
-    ESCREVEMEMLOG((long int)&(this->m[x][y]), sizeof(double));
 }
 
 // Descrição: sobreescreve o operador '+' como a soma de matrizes
