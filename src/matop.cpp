@@ -164,7 +164,7 @@ void isFileValid(std::ifstream &inFile) {
                 << ": linha do arquivo da matriz apresenta "
                    "inconsistência\nCerteza que ela não termina em um espaço?");
     }
-    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
+    erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
 
     // Como cada linha é válida, e o regex garante que há somente um
     // espaço entre os elementos, em cada linha podemos contar a 
@@ -185,14 +185,14 @@ void isFileValid(std::ifstream &inFile) {
                    lineCounter << ": linha do arquivo da matriz não tem o "
                                   " número certo de colunas");
     }
-    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
+    erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
 
     // Similarmente, nós contamos o número de quebras de linhas  
     // ('\n') no arquivo para avaliar se temos a quanitidade certa
     // (x + 1, contando o inicial)
     erroAssert(countCharFile(inFile, '\n') == x + 1,
                "Número de linhas do arquivo da matrix é diferente do esperado");
-    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
+    erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
 }
 
 // Descrição: constrói uma matrix a partir de um arquivo de entrada
@@ -207,6 +207,10 @@ matrix matrixBuilder(std::string &matrixName) {
 
     // Verifica a integridade do arquivo
     isFileValid(inFile);
+
+    // Rebobine o arquivo
+    inFile.clear(); // Necessário para remover EOFBIT do arquivo
+    inFile.seekg(0);
 
     // Leia as dimensões
     int x, y;
