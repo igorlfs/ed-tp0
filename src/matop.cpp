@@ -22,11 +22,12 @@ void uso() {
     std::cerr << "\t-s \t\t(soma matrizes) \n";
     std::cerr << "\t-m \t\t(multiplica matrizes) \n";
     std::cerr << "\t-t \t\t(transpõe matriz 1)\n";
+    std::cerr << "\t-o <arq>\t(matriz resultante)\n";
     std::cerr << "\t-1 <arq>\t(matriz 1)\n";
     std::cerr << "\t-2 <arq>\t(matriz 2)\n";
-    std::cerr << "\t-o <arq>\t(matriz resultante)\n";
     std::cerr << "\t-p <arq>\t(registro de desempenho)\n";
     std::cerr << "\t-l \t\t(padrão de acesso e localidade)\n";
+    std::cerr << "\t-h \t\timprime essa mensagem\n";
 }
 
 // Descrição: lê as opções da linha de comando e inicializa variáveis
@@ -42,7 +43,7 @@ void parseArgs(int argc, char **argv) {
 
     // getopt - letra indica a opcao, : junto a letra indica parametro
     // no caso de escolher mais de uma operacao, vale a ultima
-    while ((c = getopt(argc, argv, "smt1:2:o:p:lh")) != EOF) {
+    while ((c = getopt(argc, argv, "smto:1:2:p:lh")) != EOF) {
         switch (c) {
             case 's':
                 avisoAssert(opescolhida == -1,
@@ -59,9 +60,9 @@ void parseArgs(int argc, char **argv) {
                             "Mais de uma operação escolhida");
                 opescolhida = TRANSPOR;
                 break;
+            case 'o': outNome = optarg; break;
             case '1': m1Nome = optarg; break;
             case '2': m2Nome = optarg; break;
-            case 'o': outNome = optarg; break;
             case 'p': logNome = optarg; break;
             case 'l': regmem = 1; break;
             case 'h':
@@ -269,7 +270,6 @@ int main(int argc, char **argv) {
             matrix c = a + b;
             ml.defineFaseMemLog(3);
             c.acessaMatriz();
-            // acessa matriz c
             if (regmem) c.imprimeMatriz(outNome);
             break;
         }
