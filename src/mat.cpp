@@ -51,6 +51,7 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
     erroAssert(outfile.is_open(), "Erro ao abrir arquivo de output");
 
     // imprime e verifica se impressão ocorreu normalmente
+    outfile << this->tamx << ' ' << this->tamy << '\n';
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             outfile << this->m[i][j];
