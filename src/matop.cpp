@@ -136,12 +136,7 @@ bool isFirstLineValid(const std::string &str) {
 // Descrição: verifica se um arquivo contendo uma matriz é válido
 // Entrada: string com nome do arquivo
 // Saida: matriz construída a partir do arquivo
-void isFileValid(std::string &str) {
-
-    // Abre o arquivo e testa se foi aberto corretamente
-    std::ifstream inFile;
-    inFile.open(str);
-    erroAssert(!inFile.fail(), "Erro ao abrir arquivo da matriz");
+void isFileValid(std::ifstream &inFile) {
 
     // Teste a validade da primeira linha
     std::string firstLine;
@@ -165,23 +160,21 @@ void isFileValid(std::string &str) {
         erroAssert(
             isOtherLineValid(line),
             lineCounter
-                << ": linha do arquivo da matriz apresenta inconsistência");
+                << ": linha do arquivo da matriz apresenta "
+                   "inconsistência\nCerteza que ela não termina em um espaço?");
     }
+    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
 
-    // Teste a quantidade de elementos
-    //
-    // Como cada linha é válida, e o regex garante que há somente um espaço
-    // entre os elementos, em cada linha podemos contar a quantidade de espaços
-    // Se ela for igual a y - 1, quer dizer que a linha tem a quantidade certa
-    // de colunas
+    // Como cada linha é válida, e o regex garante que há somente um
+    // espaço entre os elementos, em cada linha podemos contar a 
+    // quantidade de espaços. Se ela for igual a y - 1, quer dizer
+    // que a linha tem a quantidade certa de colunas
 
     // Rebobine o arquivo
     inFile.clear(); // Necessário para remover EOFBIT do arquivo
     inFile.seekg(0);
 
-    // Ignore a primeira linha
-    std::getline(inFile, firstLine);
-
+    std::getline(inFile, firstLine); // Ignore a primeira linha
     for (int lineCounter = 1;; lineCounter++) {
         // Antes de testar cada linha verifique se o EOF foi atingido
         std::string line;
@@ -191,15 +184,14 @@ void isFileValid(std::string &str) {
                    lineCounter << ": linha do arquivo da matriz não tem o "
                                   " número certo de colunas");
     }
+    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
 
-    // Similarmente, nós contamos o número de quebras de linhas ('\n') no
-    // arquivo para avaliar se temos a quanitidade certa (x + 1, contando o
-    // inicial)
+    // Similarmente, nós contamos o número de quebras de linhas  
+    // ('\n') no arquivo para avaliar se temos a quanitidade certa
+    // (x + 1, contando o inicial)
     erroAssert(countCharFile(inFile, '\n') == x + 1,
                "Número de linhas do arquivo da matrix é diferente do esperado");
-
-    // Lembre-se de fechar o arquivo
-    inFile.close();
+    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
 }
 
 // Descrição: constrói uma matrix a partir de um arquivo de entrada
@@ -207,13 +199,13 @@ void isFileValid(std::string &str) {
 // Saida: matriz construída a partir do arquivo
 matrix matrixBuilder(std::string &matrixName) {
 
-    // Verifica a integridade do arquivo
-    isFileValid(matrixName);
-
     // Abre o arquivo
     std::ifstream inFile;
     inFile.open(matrixName);
-    erroAssert(!inFile.fail(), "Erro ao abrir arquivo da matriz");
+    erroAssert(inFile.is_open(), "Erro ao abrir arquivo da matriz");
+
+    // Verifica a integridade do arquivo
+    isFileValid(inFile);
 
     // Leia as dimensões
     int x, y;
@@ -223,7 +215,7 @@ matrix matrixBuilder(std::string &matrixName) {
     matrix mat(x, y);
     mat.inicializaMatrizNula();
 
-    // Inicialize a matriz
+    // Inicialize a matriz e confere se houve algum erro
     for (int i = 0; i < x; ++i) {
         for (int j = 0; j < y; ++j) {
             double d;
@@ -232,9 +224,11 @@ matrix matrixBuilder(std::string &matrixName) {
             ESCREVEMEMLOG((long int)((mat.getAddress(i, j))), sizeof(double));
         }
     }
+    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
 
-    // Lembre-se de fechar o arquivo
+    // fecha o arquivo e verifica se ocorreu normalmente
     inFile.close();
+    erroAssert(!inFile.is_open(), "Erro ao fechar arquivo da matriz");
 
     return mat;
 }
