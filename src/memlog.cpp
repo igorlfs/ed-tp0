@@ -6,6 +6,7 @@
 // Saída: resultado
 void clockDifference(struct timespec &t1, struct timespec &t2,
                      struct timespec *resultado) {
+
     if (t2.tv_nsec < t1.tv_nsec) {
         // ajuste necessário, utilizando um segundo de tv_sec
         resultado->tv_nsec = 1000000000 + t2.tv_nsec - t1.tv_nsec;
@@ -19,7 +20,7 @@ void clockDifference(struct timespec &t1, struct timespec &t2,
 
 // Descrição: inicializa o registro de acessos
 // Entrada: nome
-// Saída: não tem
+// Saída: resultado
 int memlog::iniciaMemLog(const std::string &nome) {
     // escolhe modo do relogio
     this->clk_id = CLOCK_MONOTONIC;
@@ -27,7 +28,7 @@ int memlog::iniciaMemLog(const std::string &nome) {
     // abre arquivo de registro e verifica se foi aberto corretamente
     this->nome = nome;
     this->log.open(this->nome);
-    erroAssert(this->log.good(), "Cannot open memlog output");
+    erroAssert(this->log.is_open(), "Erro ao abrir arquivo do memlog");
 
     // captura o tempo inicial do registro
     struct timespec tp;
@@ -40,11 +41,10 @@ int memlog::iniciaMemLog(const std::string &nome) {
     this->ativo = MLATIVO;
     this->fase = 0;
 
-    // imprime registro inicial
+    // imprime registro inicial e verificado se ocorreu corretamente
     this->log << "I " << this->count << ' ' << tp.tv_sec << '.' << tp.tv_nsec;
     this->log.put('\n');
-    this->log.close();
-    erroAssert(this->log, "Não foi possível escrever registro");
+    erroAssert(!this->log.fail(), "Não foi possível escrever registro");
     return result;
 }
 
@@ -93,6 +93,7 @@ int memlog::escreveMemLog(const long int &pos, const long int &tam) {
 // Saída: resultado da obtenção do relógio
 int memlog::geralMemLog(const char &c, const long int &pos,
                         const long int &tam) {
+
     // verifica se a opção é válida
     erroAssert(c == ESCRITA || c == LEITURA, "Opção inválida para registro");
 
@@ -109,16 +110,11 @@ int memlog::geralMemLog(const char &c, const long int &pos,
     // atualiza contador
     this->count++;
 
-    // abre arquivo de registro e verifica se foi aberto corretamente
-    this->log.open(this->nome, std::ios_base::app); // append
-    erroAssert(this->log.good(), "Cannot open memlog output");
-
-    // imprime registro, fecha arquivo e verifica se houve algum erro
+    // imprime registro e verifica se houve algum erro
     this->log << c << ' ' << this->fase << ' ' << this->count << ' '
               << tdif.tv_sec << '.' << tdif.tv_nsec << ' ' << pos << ' ' << tam;
     this->log.put('\n');
-    this->log.close();
-    erroAssert(this->log, "Não foi possível escrever registro");
+    erroAssert(!this->log.fail(), "Não foi possível escrever registro");
 
     return result;
 }
@@ -127,6 +123,7 @@ int memlog::geralMemLog(const char &c, const long int &pos,
 // Entrada: --
 // Saída: resultado da obtemção do relógio
 int memlog::finalizaMemLog() {
+
     // captura o tempo atual
     struct timespec tp;
     int result = clock_gettime(this->clk_id, &tp);
@@ -134,15 +131,14 @@ int memlog::finalizaMemLog() {
     // atualiza contador
     this->count++;
 
-    // abre arquivo de registro e verifica se foi aberto corretamente
-    this->log.open(this->nome, std::ios_base::app); // append
-    erroAssert(this->log.good(), "Cannot open memlog output");
-
-    // imprime registro final, fecha arquivo e verifica se houve algum erro
+    // imprime registro final e verifica se houve algum erro
     this->log << "F " << this->count << ' ' << tp.tv_sec << '.' << tp.tv_nsec;
     this->log.put('\n');
+    erroAssert(!this->log.fail(), "Não foi possível escrever registro");
+
+    // fecha arquivo e verifica se houve algum erro
     this->log.close();
-    erroAssert(this->log, "Não foi possível escrever registro");
+    erroAssert(!this->log.is_open(), "Erro ao fechar arquivo do memlog");
 
     // atualiza variável de estado
     this->ativo = MLINATIVO;
