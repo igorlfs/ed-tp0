@@ -113,10 +113,6 @@ double matrix::acessaMatriz() const {
 // Saída: matriz destruída
 matrix::~matrix() {
 
-    // apenas um aviso se a matriz for destruída mais de uma vez
-    avisoAssert(((this->tamx > 0) && (this->tamy > 0)),
-                "Matriz já foi destruída");
-
     // delete as alocações
     for (int i = 0; i < this->tamx; ++i)
         delete[] this->m[i];
