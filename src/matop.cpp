@@ -18,6 +18,7 @@ bool regmem = 0;
 // Entrada: --
 // Saída: impressão das opções de linha de comando
 void uso() {
+
     std::cerr << "matop\n";
     std::cerr << "\t-s \t\t(soma matrizes) \n";
     std::cerr << "\t-m \t\t(multiplica matrizes) \n";
@@ -32,17 +33,17 @@ void uso() {
 
 // Descrição: lê as opções da linha de comando e inicializa variáveis
 // Entrada: argc,argv
-// Saida: optescolhida, optx, opty, regmem, lognome
+// Saida: opescolhida, lognome, outNome, regmem, m1Nome m2Nome
 void parseArgs(int argc, char **argv) {
 
-    // variaveis externas do getopt
+    // variáveis externas do getopt
     extern char *optarg;
 
-    // variavel auxiliar
+    // variável auxiliar
     int c;
 
-    // getopt - letra indica a opcao, : junto a letra indica parametro
-    // no caso de escolher mais de uma operacao, vale a ultima
+    // getopt - letra indica a opção, : junto a letra indica parâmetro
+    // no caso de escolher mais de uma operação, vale a última
     while ((c = getopt(argc, argv, "smto:1:2:p:lh")) != EOF) {
         switch (c) {
             case 's':
@@ -69,7 +70,7 @@ void parseArgs(int argc, char **argv) {
             default: uso(); exit(1);
         }
     }
-    // verificacao da consistência das opções
+    // verificação da consistência das opções
     erroAssert(opescolhida > 0, "matop - necessário escolher operação");
     erroAssert(
         !logNome.empty(),

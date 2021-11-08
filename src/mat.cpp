@@ -9,9 +9,7 @@ matrix::matrix(const int &tx, const int &ty) {
 
     // verifica se os valores de tx e ty são válidos
     erroAssert(tx > 0, "Dimensão nula");
-    erroAssert(ty > 0, "Dimentão nula");
-    erroAssert(tx <= MAXTAM, "Dimensão maior que permitido");
-    erroAssert(ty <= MAXTAM, "Dimensão maior que permitido");
+    erroAssert(ty > 0, "Dimensão nula");
 
     // atribui variáveis
     this->tamx = tx;

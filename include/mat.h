@@ -3,8 +3,6 @@
 
 #include <string>
 
-#define MAXTAM 1000
-
 class matrix {
   public:
     matrix(const int &tx, const int &ty);
