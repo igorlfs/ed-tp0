@@ -33,11 +33,11 @@ $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.cpp
 
 test: $(EXE_TEST)
 
-$(BIN)/test: $(OBJ)/tst.o $(OBJ)/mat.o
-	$(CC) -o $(EXE_TEST) $(OBJ)/tst.o $(OBJ)/mat.o $(OBJ)/memlog.o $(LIBS) -lgtest; ./$(EXE_TEST)
+$(BIN)/test: $(OBJ)/test.o $(OBJ)/mat.o
+	$(CC) -o $(EXE_TEST) $(OBJ)/test.o $(OBJ)/mat.o $(OBJ)/memlog.o $(LIBS) -lgtest; ./$(EXE_TEST)
 
-$(OBJ)/tst.o: $(INC)/mat.h $(SRC)/tst.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/tst.o $(SRC)/tst.cpp
+$(OBJ)/test.o: $(INC)/mat.h $(SRC)/test.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/test.o $(SRC)/test.cpp
 
 	
 clean:
