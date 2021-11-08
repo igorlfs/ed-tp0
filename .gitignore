@@ -5,3 +5,4 @@ asset/
 compile_commands.json
 *.txt
 TODO
+doc/
