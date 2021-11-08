@@ -100,6 +100,7 @@ unsigned countCharFile(std::istream &in, const char &c) {
         if (in.eof()) break;
         if (c == f) n++;
     }
+    erroAssert(!in.bad(), "Erro na leitura do arquivo da matriz");
     return n;
 }
 
@@ -137,7 +138,12 @@ bool isFirstLineValid(const std::string &str) {
 // Descrição: verifica se um arquivo contendo uma matriz é válido
 // Entrada: string com nome do arquivo
 // Saida: matriz construída a partir do arquivo
-void isFileValid(std::ifstream &inFile) {
+void isFileValid(std::string &matrixName) {
+
+    // Abre o arquivo
+    std::ifstream inFile;
+    inFile.open(matrixName);
+    erroAssert(inFile.is_open(), "Erro ao abrir arquivo da matriz");
 
     // Teste a validade da primeira linha
     std::string firstLine;
@@ -192,11 +198,14 @@ void isFileValid(std::ifstream &inFile) {
     // (x + 1, contando o inicial)
     erroAssert(countCharFile(inFile, '\n') == x + 1,
                "Número de linhas do arquivo da matrix é diferente do esperado");
-    erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
+
+    // fecha o arquivo e verifica se ocorreu normalmente
+    inFile.close();
+    erroAssert(!inFile.is_open(), "Erro ao fechar arquivo da matriz");
 }
 
-// Descrição: constrói uma matrix a partir de um arquivo de entrada
-// Entrada: nomeArquivo
+// Descrição: constrói uma matrix a partir de um nome de um arquivo de entrada
+// Entrada: matrixName
 // Saida: matriz construída a partir do arquivo
 matrix matrixBuilder(std::string &matrixName) {
 
@@ -205,20 +214,12 @@ matrix matrixBuilder(std::string &matrixName) {
     inFile.open(matrixName);
     erroAssert(inFile.is_open(), "Erro ao abrir arquivo da matriz");
 
-    // Verifica a integridade do arquivo
-    isFileValid(inFile);
-
-    // Rebobine o arquivo
-    inFile.clear(); // Necessário para remover EOFBIT do arquivo
-    inFile.seekg(0);
-
     // Leia as dimensões
     int x, y;
     inFile >> x >> y;
 
     // Construa a matriz
     matrix mat(x, y);
-    mat.inicializaMatrizNula();
 
     // Inicialize a matriz e confere se houve algum erro
     for (int i = 0; i < x; ++i) {
@@ -254,11 +255,17 @@ int main(int argc, char **argv) {
 
     // interprete arquivo contendo matriz 1
     ml.defineFaseMemLog(0);
+
+    // Verifica a integridade do arquivo
+    isFileValid(m1Nome);
+
     matrix a = matrixBuilder(m1Nome);
 
     // execução dependente da operação escolhida
     switch (opescolhida) {
         case SOMAR: {
+            // Verifica a integridade do arquivo
+            isFileValid(m2Nome);
             // interprete arquivo contendo matriz 2
             matrix b = matrixBuilder(m2Nome);
             // cria e imprime uma matriz que é a soma das que foram lidas
