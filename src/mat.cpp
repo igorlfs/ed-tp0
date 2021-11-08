@@ -47,16 +47,12 @@ void matrix::inicializaMatrizNula() {
 // Saída: impressão no arquivo
 void matrix::imprimeMatriz(const std::string &fileName) const {
 
-    // segurança, mas erro não deve acontecer jamais
-    erroAssert(this->tamx <= MAXTAM, "Dimensão maior que permitido");
-    erroAssert(this->tamy <= MAXTAM, "Dimensão maior que permitido");
-
-    // abre arquivo de output
+    // abre arquivo de output e confere se ocorreu como deveria
     std::ofstream outfile;
     outfile.open(fileName);
-    erroAssert(!outfile.fail(), "Erro ao abrir arquivo de output");
+    erroAssert(outfile.is_open(), "Erro ao abrir arquivo de output");
 
-    // imprime
+    // imprime e verifica se impressão ocorreu normalmente
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             outfile << this->m[i][j];
@@ -65,9 +61,11 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
         }
         outfile.put('\n');
     }
+    erroAssert(!outfile.fail(), "Erro ao escrever arquivo de saída");
 
-    // fecha arquivo de output
+    // fecha arquivo de output e confere se ocorreu como deveria
     outfile.close();
+    erroAssert(!outfile.is_open(), "Erro ao fechar arquivo de output");
 }
 
 // Descrição: retorna uma cópia transposta da matriz
@@ -98,6 +96,7 @@ double matrix::acessaMatriz() const {
 
     double aux, s = 0.0;
 
+    // acesse os elementos
     for (int i = 0; i < this->tamx; ++i) {
         for (int j = 0; j < this->tamy; ++j) {
             aux = this->m[i][j];
