@@ -227,7 +227,8 @@ matrix matrixBuilder(std::string &matrixName) {
         for (int j = 0; j < y; ++j) {
             double d;
             inFile >> d;
-            mat.setElemento(i, j, d);
+            mat.setElement(i, j, d);
+            ESCREVEMEMLOG((long int)((mat.getAddress(i, j))), sizeof(double));
         }
     }
 
