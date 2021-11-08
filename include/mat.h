@@ -1,7 +1,7 @@
 #ifndef MATH
 #define MATH
 
-#include "memlog.h"
+#include <string>
 
 #define MAXTAM 1000
 

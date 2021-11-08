@@ -1,4 +1,5 @@
 #include "mat.h"
+#include "memlog.h"
 #include <gtest/gtest.h>
 
 // Variáveis e constantes globais para teste

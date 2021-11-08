@@ -8,6 +8,10 @@
 static constexpr bool MLATIVO = 1;
 static constexpr bool MLINATIVO = 0;
 
+// Constantes para operações de registro
+const static char ESCRITA = 'E';
+const static char LEITURA = 'L';
+
 class memlog {
   public:
     int iniciaMemLog(const std::string &nome);
@@ -24,8 +28,6 @@ class memlog {
     int ativo;
 
   private:
-    const static char ESCRITA = 'E';
-    const static char LEITURA = 'L';
     std::ofstream log;
     clockid_t clk_id;
     struct timespec inittime;
