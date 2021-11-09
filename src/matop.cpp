@@ -306,6 +306,9 @@ int main(int argc, char **argv) {
         default: std::cout << "Here be dragons!\n"; exit(1);
     }
 
+    // Confira se o arquivo de saída atende o formato
+    isFileValid(outNome);
+
     // conclui o registro
     return ml.finalizaMemLog();
 }

@@ -186,6 +186,7 @@ matrix matrix::operator+(const matrix &M) {
 // Entrada: matriz M
 // Saida: matriz resultante
 matrix matrix::operator*(const matrix &M) {
+
     // verifica se as dimensões das matrizes a e b são as mesmas
     erroAssert(this->tamy == M.tamx, "Dimensões incompatíveis");
 
