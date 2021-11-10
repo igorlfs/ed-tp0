@@ -230,7 +230,7 @@ matrix matrixBuilder(std::string &matrixName) {
             ESCREVEMEMLOG((long int)((mat.getAddress(i, j))), sizeof(double));
         }
     }
-    erroAssert(!inFile.fail(), "Erro na leitura do arquivo da matriz");
+    erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
 
     // fecha o arquivo e verifica se ocorreu normalmente
     inFile.close();
