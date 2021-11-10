@@ -1,6 +1,7 @@
 #include "mat.h"
 #include "memlog.h"
 #include "msgassert.h"
+#include <iomanip>
 
 // Descrição: constrói matriz com dimensões tx por ty
 // Entrada: tx, ty, memlog
@@ -54,6 +55,8 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
     outfile << this->tamx << ' ' << this->tamy << '\n';
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
+            outfile << std::fixed << std::showpoint;
+            outfile << std::setprecision(3);
             outfile << this->m[i][j];
             if (j != this->tamy - 1) outfile << ' ';
             LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
