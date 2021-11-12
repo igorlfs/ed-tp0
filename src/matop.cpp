@@ -33,7 +33,7 @@ void uso() {
 
 // Descrição: lê as opções da linha de comando e inicializa variáveis
 // Entrada: argc,argv
-// Saida: opescolhida, lognome, outNome, regmem, m1Nome m2Nome
+// Saída: opescolhida, lognome, outNome, regmem, m1Nome m2Nome
 void parseArgs(int argc, char **argv) {
 
     // variáveis externas do getopt
@@ -87,7 +87,7 @@ void parseArgs(int argc, char **argv) {
 
 // Descrição: conte o número de vezes que c aparece no arquivo
 // Entrada: in,c
-// Saida: número de vezes que c aparece no arquivo
+// Saída: número de vezes que c aparece no arquivo
 unsigned countCharFile(std::istream &in, const char &c) {
 
     // Rebobine o arquivo
@@ -106,7 +106,7 @@ unsigned countCharFile(std::istream &in, const char &c) {
 
 // Descrição: conte o número de vezes que c aparece em str
 // Entrada: str,c
-// Saida: número de vezes que c aparece em str
+// Saída: número de vezes que c aparece em str
 unsigned countCharStr(const std::string &str, const char &c) {
 
     unsigned n = 0;
@@ -117,7 +117,7 @@ unsigned countCharStr(const std::string &str, const char &c) {
 
 // Descrição: verifica se outras linhas de um arquivo são consistentes
 // Entrada: str
-// Saida: retorna verdadeiro se consisntente e falso caso contrário
+// Saída: retorna verdadeiro se consisntente e falso caso contrário
 bool isOtherLineValid(const std::string &str) {
 
     // Esperado: float separados por um único espaço (termina em float)
@@ -127,7 +127,7 @@ bool isOtherLineValid(const std::string &str) {
 
 // Descrição: verifica se a 1ª linha de um arquivo é consistente
 // Entrada: str
-// Saida: retorna verdadeiro se consisntente e falso caso contrário
+// Saída: retorna verdadeiro se consisntente e falso caso contrário
 bool isFirstLineValid(const std::string &str) {
 
     // Esperado: dois inteiros separados por um único espaço
@@ -137,7 +137,7 @@ bool isFirstLineValid(const std::string &str) {
 
 // Descrição: verifica se um arquivo contendo uma matriz é válido
 // Entrada: string com nome do arquivo
-// Saida: matriz construída a partir do arquivo
+// Saída: matriz construída a partir do arquivo
 void isFileValid(std::string &matrixName) {
 
     // Abre o arquivo
@@ -206,7 +206,7 @@ void isFileValid(std::string &matrixName) {
 
 // Descrição: constrói uma matrix a partir de um nome de um arquivo de entrada
 // Entrada: matrixName
-// Saida: matriz construída a partir do arquivo
+// Saída: matriz construída a partir do arquivo
 matrix matrixBuilder(std::string &matrixName) {
 
     // Abre o arquivo
@@ -239,7 +239,7 @@ matrix matrixBuilder(std::string &matrixName) {
 
 // Descrição: programa principal para execução de operações de matrizes
 // Entrada: argc,argv
-// Saida: depende da operação escolhida
+// Saída: depende da operação escolhida
 int main(int argc, char **argv) {
 
     // interprete opções de linha de comando

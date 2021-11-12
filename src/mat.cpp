@@ -169,7 +169,7 @@ void matrix::setElement(const int &x, const int &y, const double &v) {
 
 // Descrição: sobreescreve o operador '+' como a soma de matrizes
 // Entrada: matriz M
-// Saida: matriz resultante
+// Saída: matriz resultante
 matrix matrix::operator+(const matrix &M) {
 
     // verifica se as dimensões das matrizes a e b são as mesmas
@@ -196,7 +196,7 @@ matrix matrix::operator+(const matrix &M) {
 
 // Descrição: sobreescreve o operador '*' como o produto de matrizes
 // Entrada: matriz M
-// Saida: matriz resultante
+// Saída: matriz resultante
 matrix matrix::operator*(const matrix &M) {
 
     // verifica se as dimensões das matrizes a e b são as mesmas
