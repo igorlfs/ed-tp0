@@ -3,8 +3,11 @@
 #include "msgassert.h"
 #include <iomanip>
 
+// Variável global para registro
+int matrixId = 0;
+
 // Descrição: constrói matriz com dimensões tx por ty
-// Entrada: tx, ty, memlog
+// Entrada: tx, ty
 // Saída: matriz
 matrix::matrix(const int &tx, const int &ty) {
 
@@ -15,6 +18,8 @@ matrix::matrix(const int &tx, const int &ty) {
     // atribui variáveis
     this->tamx = tx;
     this->tamy = ty;
+    this->id = matrixId;
+    matrixId++;
 
     // aloca dinamicamente a matriz
     // use nothrow para checar se a alocação ocorreu normalmente
@@ -36,7 +41,8 @@ void matrix::inicializaMatrizNula() {
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             this->m[i][j] = 0;
-            ESCREVEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
+            ESCREVEMEMLOG((long int)(&(this->m[i][j])), sizeof(double),
+                          this->id);
         }
     }
 }
@@ -59,7 +65,7 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
             outfile << std::setprecision(3);
             outfile << this->m[i][j];
             if (j != this->tamy - 1) outfile << ' ';
-            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double), this->id);
         }
         outfile.put('\n');
     }
@@ -83,8 +89,9 @@ matrix matrix::transpoeMatriz() const {
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             result.m[j][i] = this->m[i][j];
-            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
-            ESCREVEMEMLOG((long int)&(result.m[j][i]), sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double), this->id);
+            ESCREVEMEMLOG((long int)&(result.m[j][i]), sizeof(double),
+                          result.id);
         }
     }
 
@@ -103,7 +110,7 @@ double matrix::acessaMatriz() const {
         for (int j = 0; j < this->tamy; ++j) {
             aux = this->m[i][j];
             s += aux;
-            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double), this->id);
         }
     }
     return s;
@@ -176,9 +183,10 @@ matrix matrix::operator+(const matrix &M) {
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             result.m[i][j] = this->m[i][j] + M.m[i][j];
-            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double));
-            LEMEMLOG((long int)(&(M.m[i][j])), sizeof(double));
-            ESCREVEMEMLOG((long int)(&(result.m[i][j])), sizeof(double));
+            LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double), this->id);
+            LEMEMLOG((long int)(&(M.m[i][j])), sizeof(double), M.id);
+            ESCREVEMEMLOG((long int)(&(result.m[i][j])), sizeof(double),
+                          result.id);
         }
     }
 
@@ -202,9 +210,11 @@ matrix matrix::operator*(const matrix &M) {
         for (int j = 0; j < result.tamy; j++) {
             for (int k = 0; k < this->tamy; k++) {
                 result.m[i][j] += this->m[i][k] * M.m[k][j];
-                LEMEMLOG((long int)(&(this->m[i][k])), sizeof(double));
-                LEMEMLOG((long int)(&(M.m[k][j])), sizeof(double));
-                ESCREVEMEMLOG((long int)(&(result.m[i][j])), sizeof(double));
+                LEMEMLOG((long int)(&(this->m[i][k])), sizeof(double),
+                         this->id);
+                LEMEMLOG((long int)(&(M.m[k][j])), sizeof(double), M.id);
+                ESCREVEMEMLOG((long int)(&(result.m[i][j])), sizeof(double),
+                              result.id);
             }
         }
     }

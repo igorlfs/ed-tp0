@@ -22,6 +22,7 @@ class matrix {
   private:
     double **m;
     int tamx, tamy;
+    int id;
 };
 
 #endif

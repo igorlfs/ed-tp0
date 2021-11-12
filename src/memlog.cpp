@@ -72,10 +72,19 @@ int memlog::defineFaseMemLog(const int &f) {
     return f;
 }
 
+// Descrição: define o id de registro de acessos
+// Entrada: id
+// Saída: valor do id
+int memlog::defineId(const int &id) {
+    this->id = id;
+    return id;
+}
+
 // Descrição: registra acesso de leitura de tam bytes na posição pos
 // Entrada: pos,tam
 // Saída: resultado da obtencao do relogio
-int memlog::leMemLog(const long int &pos, const long int &tam) {
+int memlog::leMemLog(const long int &pos, const long int &tam, const int &id) {
+    this->defineId(id);
     char op = LEITURA;
     return geralMemLog(op, pos, tam);
 }
@@ -83,7 +92,9 @@ int memlog::leMemLog(const long int &pos, const long int &tam) {
 // Descrição: registra acesso de escrita de tam bytes na posição pos
 // Entrada: pos, tam
 // Saída: resultado da obtenção do relógio
-int memlog::escreveMemLog(const long int &pos, const long int &tam) {
+int memlog::escreveMemLog(const long int &pos, const long int &tam,
+                          const int &id) {
+    this->defineId(id);
     char op = ESCRITA;
     return geralMemLog(op, pos, tam);
 }
@@ -111,9 +122,9 @@ int memlog::geralMemLog(const char &c, const long int &pos,
     this->count++;
 
     // imprime registro e verifica se houve algum erro
-    this->log << c << ' ' << this->fase << ' ' << this->count << ' '
-              << tdif.tv_sec << '.' << tdif.tv_nsec << ' ' << pos << ' ' << tam;
-    this->log.put('\n');
+    this->log << c << ' ' << this->fase << ' ' << this->count << ' ' << this->id
+              << ' ' << tdif.tv_sec << '.' << tdif.tv_nsec << ' ' << pos << ' '
+              << tam << '\n';
     erroAssert(!this->log.fail(), "Não foi possível escrever registro");
 
     return result;
