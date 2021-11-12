@@ -224,10 +224,8 @@ matrix matrixBuilder(std::string &matrixName) {
     // Inicialize a matriz e confere se houve algum erro
     for (int i = 0; i < x; ++i) {
         for (int j = 0; j < y; ++j) {
-            double d;
-            inFile >> d;
+            double d = inFile.get();
             mat.setElement(i, j, d);
-            ESCREVEMEMLOG((long int)((mat.getAddress(i, j))), sizeof(double));
         }
     }
     erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
