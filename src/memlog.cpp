@@ -2,7 +2,7 @@
 #include "msgassert.h"
 
 // Descrição: calcula a diferença entre t2 e t1, que é armazenada em resultado
-// Entrada: t1, t2
+// Entrada: t1, t2, resultado
 // Saída: resultado
 void clockDifference(struct timespec &t1, struct timespec &t2,
                      struct timespec *resultado) {
@@ -22,6 +22,7 @@ void clockDifference(struct timespec &t1, struct timespec &t2,
 // Entrada: nome
 // Saída: resultado
 int memlog::iniciaMemLog(const std::string &nome) {
+
     // escolhe modo do relogio
     this->clk_id = CLOCK_MONOTONIC;
 
@@ -100,7 +101,7 @@ int memlog::escreveMemLog(const long int &pos, const long int &tam,
 }
 
 // Descrição: registra acesso de escrita de tam bytes na posição pos
-// Entrada: pos, tam
+// Entrada: c, pos, tam
 // Saída: resultado da obtenção do relógio
 int memlog::geralMemLog(const char &c, const long int &pos,
                         const long int &tam) {
