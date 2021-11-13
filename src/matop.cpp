@@ -85,25 +85,6 @@ void parseArgs(int argc, char **argv) {
     }
 }
 
-// Descrição: conte o número de vezes que c aparece no arquivo
-// Entrada: in,c
-// Saída: número de vezes que c aparece no arquivo
-unsigned countCharFile(std::istream &in, const char c) {
-
-    // Rebobine o arquivo
-    in.clear(); // Necessário para remover EOFBIT do arquivo
-    in.seekg(0);
-
-    unsigned n = 0;
-    while (1) {
-        char f = in.get();
-        if (in.eof()) break;
-        if (c == f) n++;
-    }
-    erroAssert(!in.bad(), "Erro na leitura do arquivo da matriz");
-    return n;
-}
-
 // Descrição: conte o número de vezes que c aparece em str
 // Entrada: str,c
 // Saída: número de vezes que c aparece em str
@@ -163,12 +144,10 @@ void isFileValid(std::string &matrixName) {
         std::string line;
         std::getline(inFile, line);
         if (inFile.eof()) break;
-        erroAssert(
-            isOtherLineValid(line),
-            "Linha "
-                << lineCounter
-                << " do arquivo da matriz apresenta "
-                   "inconsistência\nCerteza que ela não termina em um espaço?");
+        erroAssert(isOtherLineValid(line),
+                   "Linha " << lineCounter
+                            << " do arquivo da matriz é inconsistente\n"
+                               "Certeza que ela não termina em um espaço?");
     }
     erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
 
@@ -176,37 +155,36 @@ void isFileValid(std::string &matrixName) {
     // espaço entre os elementos, em cada linha podemos contar a 
     // quantidade de espaços. Se ela for igual a y - 1, quer dizer
     // que a linha tem a quantidade certa de colunas
+    //
+    // Similarmente, nós contamos o número de linhas no arquivo para
+    // avaliar se temos a quanitidade certa (x + 1)
 
     // Rebobine o arquivo
     inFile.clear(); // Necessário para remover EOFBIT do arquivo
     inFile.seekg(0);
 
     std::getline(inFile, firstLine); // Ignore a primeira linha
-    for (int lineCounter = 2;; lineCounter++) {
+    for (unsigned lineCounter = 2;; lineCounter++) {
         // Antes de testar cada linha verifique se o EOF foi atingido
         std::string line;
         std::getline(inFile, line);
-        if (inFile.eof()) break;
-        erroAssert(
-            countCharStr(line, ' ') == y - 1,
-            "Linha "
-                << lineCounter
-                << " do arquivo da matriz não tem o número certo de colunas");
+        if (inFile.eof()) {
+            erroAssert(lineCounter == x + 1, "Número de linhas do arquivo da "
+                                             "matriz é diferente do esperado");
+            break;
+        };
+        erroAssert(countCharStr(line, ' ') == y - 1,
+                   "Linha " << lineCounter
+                            << " da matriz não tem o número certo de colunas");
     }
     erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
-
-    // Similarmente, nós contamos o número de quebras de linhas  
-    // ('\n') no arquivo para avaliar se temos a quanitidade certa
-    // (x + 1, contando o inicial)
-    erroAssert(countCharFile(inFile, '\n') == x + 1,
-               "Número de linhas do arquivo da matrix é diferente do esperado");
 
     // fecha o arquivo e verifica se ocorreu normalmente
     inFile.close();
     erroAssert(!inFile.is_open(), "Erro ao fechar arquivo da matriz");
 }
 
-// Descrição: constrói uma matrix a partir de um nome de um arquivo de entrada
+// Descrição: constrói uma matriz a partir de um nome de um arquivo de entrada
 // Entrada: matrixName
 // Saída: matriz construída a partir do arquivo
 matrix matrixBuilder(std::string &matrixName) {
