@@ -158,16 +158,16 @@ void isFileValid(std::string &matrixName) {
     ss >> x >> y;
 
     // Teste a validade das outras linhas
-    for (int lineCounter = 1;; lineCounter++) {
+    for (int lineCounter = 2;; lineCounter++) {
         // Antes de testar cada linha verifique se o EOF foi atingido
         std::string line;
         std::getline(inFile, line);
         if (inFile.eof()) break;
-        lineCounter++;
         erroAssert(
             isOtherLineValid(line),
-            lineCounter
-                << ": linha do arquivo da matriz apresenta "
+            "Linha "
+                << lineCounter
+                << " do arquivo da matriz apresenta "
                    "inconsistência\nCerteza que ela não termina em um espaço?");
     }
     erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
@@ -182,14 +182,16 @@ void isFileValid(std::string &matrixName) {
     inFile.seekg(0);
 
     std::getline(inFile, firstLine); // Ignore a primeira linha
-    for (int lineCounter = 1;; lineCounter++) {
+    for (int lineCounter = 2;; lineCounter++) {
         // Antes de testar cada linha verifique se o EOF foi atingido
         std::string line;
         std::getline(inFile, line);
         if (inFile.eof()) break;
-        erroAssert(countCharStr(line, ' ') == y - 1,
-                   lineCounter << ": linha do arquivo da matriz não tem o "
-                                  " número certo de colunas");
+        erroAssert(
+            countCharStr(line, ' ') == y - 1,
+            "Linha "
+                << lineCounter
+                << " do arquivo da matriz não tem o número certo de colunas");
     }
     erroAssert(!inFile.bad(), "Erro na leitura do arquivo da matriz");
 
