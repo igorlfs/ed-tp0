@@ -67,7 +67,7 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
             if (j != this->tamy - 1) outfile << ' ';
             LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double), this->id);
         }
-        outfile.put('\n');
+        if (i != this->tamx - 1) outfile.put('\n');
     }
     erroAssert(!outfile.fail(), "Erro ao escrever arquivo de saída");
 
