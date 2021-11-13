@@ -62,7 +62,7 @@ void matrix::imprimeMatriz(const std::string &fileName) const {
     for (int i = 0; i < this->tamx; i++) {
         for (int j = 0; j < this->tamy; j++) {
             outfile << std::fixed << std::showpoint;
-            outfile << std::setprecision(3);
+            outfile << std::setprecision(4);
             outfile << this->m[i][j];
             if (j != this->tamy - 1) outfile << ' ';
             LEMEMLOG((long int)(&(this->m[i][j])), sizeof(double), this->id);
