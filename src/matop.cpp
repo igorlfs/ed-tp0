@@ -88,7 +88,7 @@ void parseArgs(int argc, char **argv) {
 // Descrição: conte o número de vezes que c aparece no arquivo
 // Entrada: in,c
 // Saída: número de vezes que c aparece no arquivo
-unsigned countCharFile(std::istream &in, const char &c) {
+unsigned countCharFile(std::istream &in, const char c) {
 
     // Rebobine o arquivo
     in.clear(); // Necessário para remover EOFBIT do arquivo
@@ -107,7 +107,7 @@ unsigned countCharFile(std::istream &in, const char &c) {
 // Descrição: conte o número de vezes que c aparece em str
 // Entrada: str,c
 // Saída: número de vezes que c aparece em str
-unsigned countCharStr(const std::string &str, const char &c) {
+unsigned countCharStr(const std::string &str, const char c) {
 
     unsigned n = 0;
     for (char i : str)
