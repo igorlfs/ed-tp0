@@ -226,7 +226,8 @@ matrix matrixBuilder(std::string &matrixName) {
     // Inicialize a matriz e confere se houve algum erro
     for (int i = 0; i < x; ++i) {
         for (int j = 0; j < y; ++j) {
-            double d = inFile.get();
+            double d;
+            inFile >> d;
             mat.setElement(i, j, d);
         }
     }
